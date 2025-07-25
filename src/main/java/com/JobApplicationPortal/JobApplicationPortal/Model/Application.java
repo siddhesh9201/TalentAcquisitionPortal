@@ -20,7 +20,13 @@ public class Application {
     private Date appliedDate;
     @Column(nullable = false)
     private Long expectedSalary;
+
+    @ManyToOne
+    @JoinColumn(name = "job_id",nullable = false)
     private Job job;
+
+    @ManyToOne
+    @JoinColumn(name="client_id",nullable = false)
     private Client client;
 
     public Long getId() {
