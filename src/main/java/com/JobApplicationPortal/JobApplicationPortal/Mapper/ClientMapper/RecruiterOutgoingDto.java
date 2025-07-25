@@ -1,14 +1,11 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
-import com.JobApplicationPortal.JobApplicationPortal.Model.Application;
-import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Job;
-import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class RecruiteerOutgoingDto {
+public class RecruiterOutgoingDto {
 
     private Long id;
     private String name;
