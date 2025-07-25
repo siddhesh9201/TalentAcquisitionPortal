@@ -1,6 +1,8 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
+import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,23 +12,30 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(unique = true)
     private String email;
-    @Column(nullable = false)
+
+    @Column(nullable = false,unique = true)
     private String password;
+
     @Column(nullable = false)
     private String role;
+
     @Column(nullable = false)
-    private String profileStatus;
+    @Enumerated(EnumType.STRING)
+    private ProfileStatus profileStatus;
+
+    @CreationTimestamp
     private LocalDateTime lastLogin;
 
     @OneToMany(mappedBy = "client" ,cascade= CascadeType.REMOVE,orphanRemoval = true)
     private List<Application> applications;
 
     @OneToMany(mappedBy = "recruiter",cascade = CascadeType.REMOVE,orphanRemoval = true)
-
     private List<Job> jobs;
 
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
@@ -75,11 +84,11 @@ public class Client {
         this.role = role;
     }
 
-    public String getProfileStatus() {
+    public ProfileStatus getProfileStatus() {
         return profileStatus;
     }
 
-    public void setProfileStatus(String profileStatus) {
+    public void setProfileStatus(ProfileStatus profileStatus) {
         this.profileStatus = profileStatus;
     }
 
