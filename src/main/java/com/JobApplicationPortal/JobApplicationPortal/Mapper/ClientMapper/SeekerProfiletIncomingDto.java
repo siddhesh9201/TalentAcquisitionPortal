@@ -1,15 +1,11 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import org.hibernate.annotations.BatchSize;
 
-import java.time.LocalDateTime;
-
-public class ClientIncomingDto {
+public class SeekerProfiletIncomingDto {
 
     @Size(max= 50)
     @NotNull
