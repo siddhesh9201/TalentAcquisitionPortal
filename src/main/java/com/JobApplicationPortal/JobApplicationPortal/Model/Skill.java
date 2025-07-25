@@ -1,9 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Skill {
@@ -13,6 +10,8 @@ public class Skill {
 
     private String name ;
 
+    @ManyToOne
+    @JoinColumn(name = "client_id",nullable = false)
     private  Client client;
 
     public Long getId() {

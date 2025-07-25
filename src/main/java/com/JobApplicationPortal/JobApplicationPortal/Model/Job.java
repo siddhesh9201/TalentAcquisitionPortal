@@ -1,13 +1,11 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.JobType;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Job {
     @Id
@@ -32,9 +30,12 @@ public class Job {
     @Column(nullable = false)
     private LocalDate expiryDate;
 
+    @ManyToOne
+    @JoinColumn(name = "recruiter_id",nullable = false)
     private Client recruiter;
 
-    private Application application;
+    @OneToMany(mappedBy = "job",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    private List<Application> applications;
 
     public Long getId() {
         return id;
@@ -116,11 +117,11 @@ public class Job {
         this.recruiter = recruiter;
     }
 
-    public Application getApplication() {
-        return application;
+    public List<Application> getApplications() {
+        return applications;
     }
 
-    public void setApplication(Application application) {
-        this.application = application;
+    public void setApplications(List<Application> applications) {
+        this.applications = applications;
     }
 }

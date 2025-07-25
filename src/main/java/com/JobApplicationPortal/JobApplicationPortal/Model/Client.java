@@ -3,6 +3,7 @@ package com.JobApplicationPortal.JobApplicationPortal.Model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Client {
@@ -20,11 +21,19 @@ public class Client {
     @Column(nullable = false)
     private String profileStatus;
     private LocalDateTime lastLogin;
-    private Application applications;
 
-    private Job jobs;
-    private Skill skills;
-    private Notification notifications;
+    @OneToMany(mappedBy = "client" ,cascade= CascadeType.REMOVE,orphanRemoval = true)
+    private List<Application> applications;
+
+    @OneToMany(mappedBy = "recruiter",cascade = CascadeType.REMOVE,orphanRemoval = true)
+
+    private List<Job> jobs;
+
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Skill> skills;
+
+    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Notification> notifications;
 
     public Long getId() {
         return id;
@@ -82,35 +91,35 @@ public class Client {
         this.lastLogin = lastLogin;
     }
 
-    public Application getApplications() {
+    public List<Application> getApplications() {
         return applications;
     }
 
-    public void setApplications(Application applications) {
+    public void setApplications(List<Application> applications) {
         this.applications = applications;
     }
 
-    public Job getJobs() {
+    public List<Job> getJobs() {
         return jobs;
     }
 
-    public void setJobs(Job jobs) {
+    public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
 
-    public Skill getSkills() {
+    public List<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(Skill skills) {
+    public void setSkills(List<Skill> skills) {
         this.skills = skills;
     }
 
-    public Notification getNotifications() {
+    public List<Notification> getNotifications() {
         return notifications;
     }
 
-    public void setNotifications(Notification notifications) {
+    public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
 }

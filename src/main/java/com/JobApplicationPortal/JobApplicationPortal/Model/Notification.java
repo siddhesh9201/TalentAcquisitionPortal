@@ -1,10 +1,7 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.MessageType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
@@ -18,6 +15,8 @@ public class Notification {
     private MessageType type;
     private Boolean read;
     private LocalDateTime createdAt;
+    @ManyToOne
+    @JoinColumn(name = "client_id",nullable = false )
     private Client client;
 
     public Long getId() {
