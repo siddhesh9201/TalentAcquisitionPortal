@@ -2,23 +2,21 @@ package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Application;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Job;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class SeekerProfileOutgoingDto {
-
+public class RecruiteerOutgoingDto {
 
     private Long id;
     private String name;
     private String email;
     private String role;
-    private ProfileStatus profileStatus;
     private LocalDateTime lastLogin;
-    private String resumelink;
-    private List<Skill> skills;
-    private List<Application> applications;
+    private String profileStatus;
+    private List<Job> postedJobs;
 
     public Long getId() {
         return id;
@@ -44,22 +42,12 @@ public class SeekerProfileOutgoingDto {
         this.email = email;
     }
 
-
-
     public String getRole() {
         return role;
     }
 
     public void setRole(String role) {
         this.role = role;
-    }
-
-    public ProfileStatus getProfileStatus() {
-        return profileStatus;
-    }
-
-    public void setProfileStatus(ProfileStatus profileStatus) {
-        this.profileStatus = profileStatus;
     }
 
     public LocalDateTime getLastLogin() {
@@ -70,27 +58,19 @@ public class SeekerProfileOutgoingDto {
         this.lastLogin = lastLogin;
     }
 
-    public String getResumelink() {
-        return resumelink;
+    public String getProfileStatus() {
+        return profileStatus;
     }
 
-    public void setResumelink(String resumelink) {
-        this.resumelink = resumelink;
+    public void setProfileStatus(String profileStatus) {
+        this.profileStatus = profileStatus;
     }
 
-    public List<Skill> getSkills() {
-        return skills;
+    public List<Job> getPostedJobs() {
+        return postedJobs;
     }
 
-    public void setSkills(List<Skill> skills) {
-        this.skills = skills;
-    }
-
-    public List<Application> getApplications() {
-        return applications;
-    }
-
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
+    public void setPostedJobs(List<Job> postedJobs) {
+        this.postedJobs = postedJobs;
     }
 }
