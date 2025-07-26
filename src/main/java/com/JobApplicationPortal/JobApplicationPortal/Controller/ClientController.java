@@ -1,5 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Controller;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.ClientIncomingDto;
+import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.RecruiterOutgoingDto;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.SeekerProfileOutgoingDto;
 import com.JobApplicationPortal.JobApplicationPortal.Services.ClientServices;
 import jakarta.validation.Valid;
@@ -30,5 +31,21 @@ public class ClientController {
     public ResponseEntity<SeekerProfileOutgoingDto>getSeekerProfile(@PathVariable  Long id){
         return ResponseEntity.status(HttpStatus.OK).body(clientService.getSeeker(id));
     }
+
+    @GetMapping("/recruiter/{id}")
+    public ResponseEntity<RecruiterOutgoingDto>getRecruiterProfile(@PathVariable  Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.getRecruiter(id));
+    }
+
+    @DeleteMapping("/DeleteClient/{id}")
+    public ResponseEntity<String> deleteClient(@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(clientService.deleteClient(id));
+    }
+
+    @PutMapping("/updateClient/{id}")
+    public ResponseEntity<String> updateClient(@PathVariable Long id ,@RequestBody ClientIncomingDto incoming){
+       return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id,incoming));
+    }
+
 
 }
