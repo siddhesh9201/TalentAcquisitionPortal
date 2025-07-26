@@ -1,14 +1,15 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
+import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class SeekerProfiletIncomingDto {
+public class ClientIncomingDto {
 
-    @Size(min=1,max= 50)
-    @NotNull
+
+    @Size(min=1,max = 50)
     private String name;
 
     @Email
@@ -20,7 +21,7 @@ public class SeekerProfiletIncomingDto {
     private String password;
 
     @NotNull
-    private String role;
+    private Role role;
 
 
     public @Size(min=1 ,max = 50) @NotNull String getName() {
@@ -49,11 +50,11 @@ public class SeekerProfiletIncomingDto {
         this.password = password;
     }
 
-    public @NotNull String getRole() {
+    public @NotNull Role getRole() {
         return role;
     }
 
-    public void setRole(@NotNull String role) {
+    public void setRole(@NotNull Role role) {
         this.role = role;
     }
 }
