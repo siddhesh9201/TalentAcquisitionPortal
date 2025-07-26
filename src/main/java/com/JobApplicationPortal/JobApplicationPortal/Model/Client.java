@@ -1,6 +1,8 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,16 +18,17 @@ public class Client {
     @Column(nullable = false)
     private String name;
 
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String role;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+
     @Enumerated(EnumType.STRING)
     private ProfileStatus profileStatus;
 
@@ -35,6 +38,7 @@ public class Client {
     @OneToMany(mappedBy = "client" ,cascade= CascadeType.REMOVE,orphanRemoval = true)
     private List<Application> applications;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "recruiter",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Job> jobs;
 
@@ -76,11 +80,11 @@ public class Client {
         this.password = password;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -131,4 +135,6 @@ public class Client {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
+
+
 }

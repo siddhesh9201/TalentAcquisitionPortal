@@ -16,17 +16,18 @@ public class JobMapper {
     public static Job toEntity(JobIncomingDto input )
     {
             Job job = new Job();
-            job.setCompanyName(input.getCompanyName());
             job.setDescription(input.getDescription());
             job.setExpiryDate(input.getExpiryDate());
             job.setSalaryRange(input.getSalaryRange());
             job.setLocation(input.getLocation());
             job.setTitle(input.getTitle());
             job.setType(input.getType());
+            job.setCompanyName(input.getCompanyName());
+
             return job;
     }
 
-    public static JobOutgoingDto toDto(Job job)
+    public static JobOutgoingDto toDtoForSeeker(Job job)
     {
         JobOutgoingDto output = new JobOutgoingDto();
         output.setId(job.getId());
@@ -38,6 +39,8 @@ public class JobMapper {
         output.setType(job.getType());
         output.setPostedDate(job.getPostedDate());
         output.setExpiryDate(job.getExpiryDate());
+        output.setRecruiterName(job.getRecruiter().getName());
+        output.setRecruiterEmal(job.getRecruiter().getEmail());
         return output;
     }
 
@@ -55,7 +58,7 @@ public class JobMapper {
         output.setPostedDate(job.getPostedDate());
         output.setExpiryDate(job.getExpiryDate());
         output.setApplications(job.getApplications());
-        output.setRecruiter(job.getRecruiter());
+
         return output;
     }
 

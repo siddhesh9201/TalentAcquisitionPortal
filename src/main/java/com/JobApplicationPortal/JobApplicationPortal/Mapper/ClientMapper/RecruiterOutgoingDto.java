@@ -1,5 +1,7 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
+import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Job;
 
 import java.time.LocalDateTime;
@@ -10,10 +12,18 @@ public class RecruiterOutgoingDto {
     private Long id;
     private String name;
     private String email;
-    private String role;
+    private Role role;
     private LocalDateTime lastLogin;
-    private String profileStatus;
+    private ProfileStatus profileStatus;
     private List<Job> postedJobs;
+
+    public ProfileStatus getProfileStatus() {
+        return profileStatus;
+    }
+
+    public void setProfileStatus(ProfileStatus profileStatus) {
+        this.profileStatus = profileStatus;
+    }
 
     public Long getId() {
         return id;
@@ -39,11 +49,11 @@ public class RecruiterOutgoingDto {
         this.email = email;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -55,13 +65,9 @@ public class RecruiterOutgoingDto {
         this.lastLogin = lastLogin;
     }
 
-    public String getProfileStatus() {
-        return profileStatus;
-    }
 
-    public void setProfileStatus(String profileStatus) {
-        this.profileStatus = profileStatus;
-    }
+
+
 
     public List<Job> getPostedJobs() {
         return postedJobs;

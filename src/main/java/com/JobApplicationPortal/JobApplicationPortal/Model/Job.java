@@ -2,11 +2,19 @@ package com.JobApplicationPortal.JobApplicationPortal.Model;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.JobType;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"title","company_name"})
+        }
+
+)
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,12 +29,14 @@ public class Job {
     private JobType type;
     @Column(nullable = false)
     private String location;
-    @Column(nullable = false)
+
     private String companyName;
     @Column(nullable = false)
     private String salaryRange;
 
+    @CreationTimestamp
     private LocalDateTime postedDate;
+
     @Column(nullable = false)
     private LocalDate expiryDate;
 

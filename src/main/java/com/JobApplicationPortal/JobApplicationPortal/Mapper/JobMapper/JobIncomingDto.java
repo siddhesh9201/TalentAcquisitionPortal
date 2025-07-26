@@ -1,10 +1,12 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.JobMapper;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.JobType;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -12,15 +14,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 public class JobIncomingDto {
 
 
     @NotNull
-    @Size(min=1, max=50)
     private String title;
 
-    @Size(max=100)
+
     @Pattern(regexp = "^[A-Za-z\\s]+$",message = "Optional")
     private String description;
 
@@ -31,30 +33,35 @@ public class JobIncomingDto {
     private String location;
 
     @NotNull
-    @Size(max=50)
     private String companyName;
 
-    @Pattern(regexp = "^[\\d\\-]+$", message = "1203-3122")
+    @NotNull
     private String salaryRange;
 
     @NotNull
-    @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])[\\/\\-](0[1-9]|1[0-2])[\\/\\-]\\d{4}$",
-    message = "DD-MM-YYYY")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate expiryDate;
 
-    public @NotNull @Size(min = 1, max = 50) String getTitle() {
+    @NotNull
+    @Email
+    private String recruiterEmail;
+
+    @NotNull
+    private String recruiterName;
+
+    public @NotNull String getTitle() {
         return title;
     }
 
-    public void setTitle(@NotNull @Size(min = 1, max = 50) String title) {
+    public void setTitle(@NotNull String title) {
         this.title = title;
     }
 
-    public @Size(max = 100) @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Optional") String getDescription() {
+    public @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Optional") String getDescription() {
         return description;
     }
 
-    public void setDescription(@Size(max = 100) @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Optional") String description) {
+    public void setDescription(@Pattern(regexp = "^[A-Za-z\\s]+$", message = "Optional") String description) {
         this.description = description;
     }
 
@@ -74,29 +81,43 @@ public class JobIncomingDto {
         this.location = location;
     }
 
-    public @NotNull @Size(max = 50) String getCompanyName() {
+    public @NotNull String getCompanyName() {
         return companyName;
     }
 
-    public void setCompanyName(@NotNull @Size(max = 50) String companyName) {
+    public void setCompanyName(@NotNull String companyName) {
         this.companyName = companyName;
     }
 
-    public @Pattern(regexp = "^[\\d\\-]+$", message = "1203-3122") String getSalaryRange() {
+    public @NotNull String getSalaryRange() {
         return salaryRange;
     }
 
-    public void setSalaryRange(@Pattern(regexp = "^[\\d\\-]+$", message = "1203-3122") String salaryRange) {
+    public void setSalaryRange(@NotNull String salaryRange) {
         this.salaryRange = salaryRange;
     }
 
-    public @NotNull @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])[\\/\\-](0[1-9]|1[0-2])[\\/\\-]\\d{4}$",
-            message = "DD-MM-YYYY") LocalDate getExpiryDate() {
+    public @NotNull LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(@NotNull @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])[\\/\\-](0[1-9]|1[0-2])[\\/\\-]\\d{4}$",
-            message = "DD-MM-YYYY") LocalDate expiryDate) {
+    public void setExpiryDate(@NotNull LocalDate expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public @NotNull @Email String getRecruiterEmail() {
+        return recruiterEmail;
+    }
+
+    public void setRecruiterEmail(@NotNull @Email String recruiterEmail) {
+        this.recruiterEmail = recruiterEmail;
+    }
+
+    public @NotNull String getRecruiterName() {
+        return recruiterName;
+    }
+
+    public void setRecruiterName(@NotNull String recruiterName) {
+        this.recruiterName = recruiterName;
     }
 }

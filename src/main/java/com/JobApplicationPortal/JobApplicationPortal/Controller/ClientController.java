@@ -21,7 +21,7 @@ public class ClientController {
     @Autowired
     ClientServices clientService;
 
-    @PostMapping("/Client/Register")
+    @PostMapping("/Register")
     public ResponseEntity<String> registerClient(@RequestBody @Valid ClientIncomingDto client){
             clientService.addClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body("Registration Successfully!");
@@ -46,6 +46,8 @@ public class ClientController {
     public ResponseEntity<String> updateClient(@PathVariable Long id ,@RequestBody ClientIncomingDto incoming){
        return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id,incoming));
     }
+
+
 
 
 }
