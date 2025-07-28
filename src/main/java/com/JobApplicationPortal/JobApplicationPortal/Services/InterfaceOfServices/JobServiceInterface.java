@@ -14,4 +14,10 @@ public interface JobServiceInterface {
     Page<JobOutgoingDto> getAllJobs(int page,int size,String direction,String sortby);
 
     Page<JobOutgoingForRecruiter> getAllJobsRecruiters(int page, int size, String direction, String sortby);
+
+    String deleteJobById(Long id);
+
+    Page<JobOutgoingDto> searchBy(String title, String location, int page, int size, String direction, String sortby);
+
+    String updateJob(Long id, JobIncomingDto job);
 }
