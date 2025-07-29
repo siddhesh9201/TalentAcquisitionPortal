@@ -1,5 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Services;
 
+import com.JobApplicationPortal.JobApplicationPortal.EmailService;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.ClientNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailAlreadyExistException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.SeekerNotFoundException;
@@ -27,6 +28,8 @@ public class ClientServices implements ClientServiceInterface {
     @Autowired
     ClientRepo clientRepo;
 
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     @Override
@@ -44,6 +47,7 @@ public class ClientServices implements ClientServiceInterface {
         newClient.setProfileStatus(isIncomplete ? ProfileStatus.INCOMPLITE : ProfileStatus.COMPLETE);
 
         clientRepo.save(newClient);
+        //emailService.sendRegistrationEmail(client.getEmail()); emailservice
     }
 
     @Override
