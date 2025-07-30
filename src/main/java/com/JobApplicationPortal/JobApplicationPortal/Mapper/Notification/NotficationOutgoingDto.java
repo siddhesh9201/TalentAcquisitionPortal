@@ -1,25 +1,17 @@
-package com.JobApplicationPortal.JobApplicationPortal.Model;
+package com.JobApplicationPortal.JobApplicationPortal.Mapper.Notification;
 
+import com.JobApplicationPortal.JobApplicationPortal.Model.Client;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.MessageType;
-import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
-@Entity
-public class Notification {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class NotficationOutgoingDto {
 
+    private Long id;
     private String message;
-    @Enumerated(EnumType.STRING)
     private MessageType type;
-    private boolean isread=false;
-    @CreationTimestamp
+    private boolean read;
     private LocalDateTime createdAt;
-    @ManyToOne
-    @JoinColumn(name = "client_id",nullable = false )
     private Client client;
 
     public Long getId() {
@@ -46,12 +38,12 @@ public class Notification {
         this.type = type;
     }
 
-    public boolean isIsread() {
-        return isread;
+    public boolean isRead() {
+        return read;
     }
 
-    public void setIsread(boolean isread) {
-        this.isread = isread;
+    public void setRead(boolean read) {
+        this.read = read;
     }
 
     public LocalDateTime getCreatedAt() {

@@ -1,6 +1,7 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.JobType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -44,6 +45,7 @@ public class Job {
     @JoinColumn(name = "recruiter_id",nullable = false)
     private Client recruiter;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "job",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Application> applications;
 

@@ -35,6 +35,7 @@ public class Client {
     @CreationTimestamp
     private LocalDateTime lastLogin;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client" ,cascade= CascadeType.REMOVE,orphanRemoval = true)
     private List<Application> applications;
 
@@ -45,6 +46,7 @@ public class Client {
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Skill> skills;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Notification> notifications;
 

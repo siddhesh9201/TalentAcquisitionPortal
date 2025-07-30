@@ -21,28 +21,28 @@ public class ClientController {
     @Autowired
     ClientServices clientService;
 
-    @PostMapping("/Register")
+    @PostMapping("/auth/register")
     public ResponseEntity<String> registerClient(@RequestBody @Valid ClientIncomingDto client){
             clientService.addClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body("Registration Successfully!");
     }
 
-    @GetMapping("/seeker/{id}")
+    @GetMapping("/auth/seekerprofile/{id}")
     public ResponseEntity<SeekerProfileOutgoingDto>getSeekerProfile(@PathVariable  Long id){
         return ResponseEntity.status(HttpStatus.OK).body(clientService.getSeeker(id));
     }
 
-    @GetMapping("/recruiter/{id}")
+    @GetMapping("/auth/recruitereprofile/{id}")
     public ResponseEntity<RecruiterOutgoingDto>getRecruiterProfile(@PathVariable  Long id){
         return ResponseEntity.status(HttpStatus.OK).body(clientService.getRecruiter(id));
     }
 
-    @DeleteMapping("/DeleteClient/{id}")
+    @DeleteMapping("/auth/deleteclient/{id}")
     public ResponseEntity<String> deleteClient(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(clientService.deleteClient(id));
     }
 
-    @PutMapping("/updateClient/{id}")
+    @PutMapping("/auth/updateclient/{id}")
     public ResponseEntity<String> updateClient(@PathVariable Long id ,@RequestBody ClientIncomingDto incoming){
        return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id,incoming));
     }
