@@ -1,32 +1,37 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Status;
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 
 @Entity
 public class Application {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
     private String resumeLink;
+    private String email;
+    private String coverLetter;
+    @Column(nullable = false)
 
-    private String CoverLetter;
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
+
     @Column(nullable = false)
+    @CreationTimestamp
     private Date appliedDate;
     @Column(nullable = false)
     private Long expectedSalary;
 
     @ManyToOne
-    @JoinColumn(name = "job_id",nullable = false)
+    @JoinColumn(nullable = false)
     private Job job;
 
     @ManyToOne
-    @JoinColumn(name="client_id",nullable = false)
+    @JoinColumn(nullable = false)
     private Client client;
 
     public Long getId() {
@@ -45,12 +50,20 @@ public class Application {
         this.resumeLink = resumeLink;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getCoverLetter() {
-        return CoverLetter;
+        return coverLetter;
     }
 
     public void setCoverLetter(String coverLetter) {
-        CoverLetter = coverLetter;
+        this.coverLetter = coverLetter;
     }
 
     public Status getStatus() {
