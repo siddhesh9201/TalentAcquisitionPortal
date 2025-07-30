@@ -2,6 +2,7 @@ package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Application;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ public class SeekerProfileOutgoingDto {
     private Long id;
     private String name;
     private String email;
-    private String role;
+    private Role role;
     private ProfileStatus profileStatus;
     private LocalDateTime lastLogin;
     private String resumelink;
@@ -45,12 +46,11 @@ public class SeekerProfileOutgoingDto {
     }
 
 
-
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
