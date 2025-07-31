@@ -27,6 +27,7 @@ public class Job {
     private String description;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private JobType type;
     @Column(nullable = false)
     private String location;

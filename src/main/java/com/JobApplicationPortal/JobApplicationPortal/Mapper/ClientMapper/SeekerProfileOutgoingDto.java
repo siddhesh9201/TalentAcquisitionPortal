@@ -7,6 +7,7 @@ import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public class SeekerProfileOutgoingDto {
 
@@ -17,8 +18,7 @@ public class SeekerProfileOutgoingDto {
     private Role role;
     private ProfileStatus profileStatus;
     private LocalDateTime lastLogin;
-    private String resumelink;
-    private List<Skill> skills;
+    private Set<String> skills;
     private List<Application> applications;
 
     public Long getId() {
@@ -45,7 +45,6 @@ public class SeekerProfileOutgoingDto {
         this.email = email;
     }
 
-
     public Role getRole() {
         return role;
     }
@@ -70,19 +69,11 @@ public class SeekerProfileOutgoingDto {
         this.lastLogin = lastLogin;
     }
 
-    public String getResumelink() {
-        return resumelink;
-    }
-
-    public void setResumelink(String resumelink) {
-        this.resumelink = resumelink;
-    }
-
-    public List<Skill> getSkills() {
+    public Set<String> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(Set<String> skills) {
         this.skills = skills;
     }
 

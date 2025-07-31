@@ -1,5 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Services;
 
+import com.JobApplicationPortal.JobApplicationPortal.EmailService;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.NoAnyNotificationFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.NotificationNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.Notification.NotficationOutgoingDto;
@@ -37,7 +38,8 @@ public class NotificationServices implements NotificationServiceInterface{
         ApplicatioRepo applicatioRepo;
         @Autowired
         ClientRepo clientRepo;
-
+        @Autowired
+        EmailService emailService;
 
         @Override
         public String sendNotificationRejection(NotificationIncomingDto notify) {
@@ -77,7 +79,8 @@ public class NotificationServices implements NotificationServiceInterface{
         application.setStatus(Status.SELECTED);
         applicatioRepo.save(application);
         notifyRepo.save(notification);
-
+        System.out.println(reciever.getEmail());
+      // emailService.sendSelection(reciever.getEmail());
         return "Notification Added!";
 
     }

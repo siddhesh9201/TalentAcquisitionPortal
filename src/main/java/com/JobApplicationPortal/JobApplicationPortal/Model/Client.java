@@ -3,11 +3,14 @@ package com.JobApplicationPortal.JobApplicationPortal.Model;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Client {
@@ -43,8 +46,9 @@ public class Client {
     @OneToMany(mappedBy = "recruiter",cascade = CascadeType.REMOVE,orphanRemoval = true)
     private List<Job> jobs;
 
-    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Skill> skills;
+    @JsonManagedReference
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private Set<Skill> skills = new HashSet<>();
 
     @JsonIgnore
     @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
@@ -122,11 +126,11 @@ public class Client {
         this.jobs = jobs;
     }
 
-    public List<Skill> getSkills() {
+    public Set<Skill> getSkills() {
         return skills;
     }
 
-    public void setSkills(List<Skill> skills) {
+    public void setSkills(Set<Skill> skills) {
         this.skills = skills;
     }
 
@@ -137,6 +141,4 @@ public class Client {
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
-
-
 }

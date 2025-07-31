@@ -1,15 +1,18 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.util.Set;
+
 public class ClientIncomingDto {
 
 
-    @Size(min=1,max = 50)
+
     private String name;
 
     @Email
@@ -20,9 +23,18 @@ public class ClientIncomingDto {
             message = "Password must be at least 6 characters long and contain at least one letter and one number")
     private String password;
 
-    @NotNull
+
     private Role role;
 
+    private Set<String> skills;
+
+    public Set<String> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Set<String> skills) {
+        this.skills = skills;
+    }
 
     public @Size(min=1 ,max = 50) @NotNull String getName() {
         return name;

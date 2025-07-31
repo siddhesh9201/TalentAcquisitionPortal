@@ -1,6 +1,11 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Skill {
@@ -10,9 +15,14 @@ public class Skill {
 
     private String name ;
 
+    @JsonManagedReference
     @ManyToOne
-    @JoinColumn(name = "client_id",nullable = false)
-    private  Client client;
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
+
+    public Skill(String skillName) {
+        this.name = skillName;
+    }
 
     public Long getId() {
         return id;
@@ -36,5 +46,8 @@ public class Skill {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Skill() {
     }
 }

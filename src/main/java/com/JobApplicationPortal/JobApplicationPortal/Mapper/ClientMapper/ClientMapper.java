@@ -1,6 +1,10 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Client;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
+
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ClientMapper {
 
@@ -28,10 +32,14 @@ public class ClientMapper {
         output.setEmail(client.getEmail());
         output.setRole(client.getRole());
         output.setProfileStatus(client.getProfileStatus());
-        output.setSkills(client.getSkills());
         output.setApplications(client.getApplications());
         output.setLastLogin(client.getLastLogin());
+        Set<String> skillNames = client.getSkills().stream()
+                .map(Skill::getName)
+                .collect(Collectors.toSet());
 
+
+        output.setSkills(skillNames);
         return output;
     }
 

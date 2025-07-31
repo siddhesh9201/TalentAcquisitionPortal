@@ -11,15 +11,20 @@ import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.SeekerP
 import com.JobApplicationPortal.JobApplicationPortal.Model.Client;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
+import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
 import com.JobApplicationPortal.JobApplicationPortal.Repository.ClientRepo;
+import com.JobApplicationPortal.JobApplicationPortal.Repository.SkillRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Services.InterfaceOfServices.ClientServiceInterface;
 import jakarta.transaction.Transactional;
+import jakarta.transaction.UserTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -31,6 +36,9 @@ public class ClientServices implements ClientServiceInterface {
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private SkillRepo skillRepo;
+
     @Transactional
     @Override
     public void addClient(ClientIncomingDto client) {
@@ -38,16 +46,31 @@ public class ClientServices implements ClientServiceInterface {
         if (client.getEmail() == null) {
             throw new IllegalArgumentException("Email Cannot be Null");
         }
+
         Optional<Client> foundClient = clientRepo.findByEmail(client.getEmail());
         if (foundClient.isPresent()) {
             throw new EmailAlreadyExistException("Email Already Exist");
         }
+
         Client newClient = ClientMapper.toEntity(client);
         Boolean isIncomplete = client.getName() == null || client.getRole() == null;
         newClient.setProfileStatus(isIncomplete ? ProfileStatus.INCOMPLITE : ProfileStatus.COMPLETE);
 
         clientRepo.save(newClient);
-        //emailService.sendRegistrationEmail(client.getEmail()); emailservice
+
+        Set<Skill> savedSkills = client.getSkills().stream().map(skillName -> {
+            Skill skill = skillRepo.findByName(skillName).orElseGet(() -> new Skill(skillName));
+            skill.setClient(newClient);
+            return skill;
+        }).collect(Collectors.toSet());
+
+        newClient.setSkills(savedSkills);
+
+        skillRepo.saveAll(savedSkills);
+
+        clientRepo.save(newClient);
+
+        //emailService.sendRegistrationEmail(client.getEmail());
     }
 
     @Override
@@ -56,6 +79,7 @@ public class ClientServices implements ClientServiceInterface {
         if (client.getRole() == Role.RECRUITER) {
             throw new SeekerNotFoundException("Seeker Not Found!");
         }
+
         return ClientMapper.toDto(client);
 
     }
