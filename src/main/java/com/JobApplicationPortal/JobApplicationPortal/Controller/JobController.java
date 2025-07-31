@@ -20,7 +20,7 @@ public class JobController {
          @Autowired
          JobServices jobServices;
 
-         @PostMapping("/create")
+         @PostMapping("/job/create")
          public ResponseEntity<String> addJobByRecruiter(@Valid @RequestBody JobIncomingDto jobInput){
              return ResponseEntity.status(HttpStatus.CREATED).body(jobServices.addNewJob(jobInput));
          }
