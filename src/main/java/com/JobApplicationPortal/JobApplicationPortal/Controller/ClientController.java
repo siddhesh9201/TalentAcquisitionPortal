@@ -15,6 +15,7 @@ import java.util.List;
 
 
 @RestController
+@CrossOrigin
 public class ClientController {
 
 
@@ -47,7 +48,10 @@ public class ClientController {
        return ResponseEntity.status(HttpStatus.OK).body(clientService.updateClient(id,incoming));
     }
 
-
+    @GetMapping("/getEmail/{email}")
+    public ResponseEntity<Long>getClientId(@PathVariable String email){
+                  return ResponseEntity.status(HttpStatus.OK).body(clientService.getId(email));
+            }
 
 
 }

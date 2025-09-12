@@ -2,6 +2,9 @@ package com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Client;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Skill;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,7 +19,7 @@ public class ClientMapper {
         Client client = new Client();
         client.setName(input.getName());
         client.setEmail(input.getEmail());;
-        client.setPassword(input.getPassword());
+
         client.setRole(input.getRole());
 
         return client;

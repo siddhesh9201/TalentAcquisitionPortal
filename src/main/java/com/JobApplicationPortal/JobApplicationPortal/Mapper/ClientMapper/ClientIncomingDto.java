@@ -19,8 +19,7 @@ public class ClientIncomingDto {
     @NotNull
     private String email;
 
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d@#$%^&+=!]{6,}$",
-            message = "Password must be at least 6 characters long and contain at least one letter and one number")
+    @NotNull
     private String password;
 
 

@@ -13,6 +13,7 @@ import com.JobApplicationPortal.JobApplicationPortal.Repository.ClientRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Repository.JobRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Services.InterfaceOfServices.JobServiceInterface;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.JobApplicationPortal.JobApplicationPortal.Mapper.JobMapper.JobMapper.toDto2;
 
 
 @Service
@@ -81,10 +84,8 @@ public class JobServices implements JobServiceInterface {
     public Page<JobOutgoingDto> searchBy(String title, String location, int page, int size, String direction, String sortby) {
         Sort sort = direction.equalsIgnoreCase("asc")? Sort.by(Sort.Direction.ASC,sortby): Sort.by(Sort.Direction.DESC);
         Pageable pageable= PageRequest.of(page,size,sort);
-        Page<Job>searchedJobs=jobRepo.findByTitleContainingIgnoreCaseAndLocationContainingIgnoreCase(title, location, pageable);
-        if(searchedJobs.isEmpty()){
-           throw new JobsNotfoundException("Currently, there are no job opportunities available for Specfied Criteria" +title + location);
-        }
+        Page<Job> searchedJobs = jobRepo.searchJobs(title, location, pageable);
+
         return searchedJobs.map(JobMapper ::toDtoForSeeker);
     }
 
@@ -105,6 +106,13 @@ public class JobServices implements JobServiceInterface {
         forupdate.setRecruiter(clientWithEmail);
        jobRepo.save(forupdate);
         return "Job Updated Successfully";
+
+    }
+
+    @Override
+    public JobOutgoingDto getJobById(Long jobId) {
+        Job job= jobRepo.findById(jobId).orElseThrow(()-> new RuntimeException("Job Not Found"));
+             return JobMapper.toDtoForSeeker(job);
 
     }
 

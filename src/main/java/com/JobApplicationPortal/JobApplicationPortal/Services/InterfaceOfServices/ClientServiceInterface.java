@@ -3,10 +3,6 @@ package com.JobApplicationPortal.JobApplicationPortal.Services.InterfaceOfServic
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.ClientIncomingDto;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.RecruiterOutgoingDto;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.SeekerProfileOutgoingDto;
-import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 
 public interface ClientServiceInterface {
@@ -20,4 +16,6 @@ public interface ClientServiceInterface {
     String deleteClient(Long id);
 
     String updateClient(Long id,ClientIncomingDto incoming);
+
+    Long getId(String email);
 }

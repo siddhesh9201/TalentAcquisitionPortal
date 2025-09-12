@@ -3,6 +3,7 @@ package com.JobApplicationPortal.JobApplicationPortal.Services;
 import com.JobApplicationPortal.JobApplicationPortal.EmailService;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.ClientNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailAlreadyExistException;
+import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.SeekerNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.ClientIncomingDto;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.ClientMapper.ClientMapper;
@@ -16,12 +17,10 @@ import com.JobApplicationPortal.JobApplicationPortal.Repository.ClientRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Repository.SkillRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Services.InterfaceOfServices.ClientServiceInterface;
 import jakarta.transaction.Transactional;
-import jakarta.transaction.UserTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -39,6 +38,9 @@ public class ClientServices implements ClientServiceInterface {
     @Autowired
     private SkillRepo skillRepo;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Transactional
     @Override
     public void addClient(ClientIncomingDto client) {
@@ -55,7 +57,7 @@ public class ClientServices implements ClientServiceInterface {
         Client newClient = ClientMapper.toEntity(client);
         Boolean isIncomplete = client.getName() == null || client.getRole() == null;
         newClient.setProfileStatus(isIncomplete ? ProfileStatus.INCOMPLITE : ProfileStatus.COMPLETE);
-
+                 newClient.setPassword(passwordEncoder.encode(client.getPassword()));
         clientRepo.save(newClient);
 
         Set<Skill> savedSkills = client.getSkills().stream().map(skillName -> {
@@ -126,6 +128,11 @@ public class ClientServices implements ClientServiceInterface {
         return "Client Updated Successfully!";
     }
 
+    @Override
+    public Long getId(String email) {
+       Client c=  clientRepo.findByEmail(email).orElseThrow(()->{ throw new EmailNotFoundException("email not exist");});
+        return c.getId();
+    }
 
 
 }

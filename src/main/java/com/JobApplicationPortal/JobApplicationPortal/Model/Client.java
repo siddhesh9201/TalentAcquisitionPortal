@@ -6,14 +6,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
-public class Client {
+public class Client implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,16 +22,14 @@ public class Client {
     @Column(nullable = false)
     private String name;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
 
     @Enumerated(EnumType.STRING)
     private ProfileStatus profileStatus;
@@ -39,11 +38,11 @@ public class Client {
     private LocalDateTime lastLogin;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "client" ,cascade= CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Application> applications;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "recruiter",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @OneToMany(mappedBy = "recruiter", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Job> jobs;
 
     @JsonManagedReference
@@ -51,94 +50,77 @@ public class Client {
     private Set<Skill> skills = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "client",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Notification> notifications;
 
-    public Long getId() {
-        return id;
-    }
+    // ------------------- UserDetails implementation -------------------
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 
-    public Role getRole() {
-        return role;
+    @Override
+    public boolean isAccountNonExpired() {
+        return UserDetails.super.isAccountNonExpired();
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    @Override
+    public boolean isAccountNonLocked() {
+        return UserDetails.super.isAccountNonLocked();
     }
 
-    public ProfileStatus getProfileStatus() {
-        return profileStatus;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return UserDetails.super.isCredentialsNonExpired();
     }
 
-    public void setProfileStatus(ProfileStatus profileStatus) {
-        this.profileStatus = profileStatus;
+    @Override
+    public boolean isEnabled() {
+        return UserDetails.super.isEnabled();
     }
 
-    public LocalDateTime getLastLogin() {
-        return lastLogin;
-    }
 
-    public void setLastLogin(LocalDateTime lastLogin) {
-        this.lastLogin = lastLogin;
-    }
+    // ------------------- Getters & Setters -------------------
 
-    public List<Application> getApplications() {
-        return applications;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setApplications(List<Application> applications) {
-        this.applications = applications;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 
-    public List<Job> getJobs() {
-        return jobs;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
+    public void setPassword(String password) { this.password = password; }
 
-    public Set<Skill> getSkills() {
-        return skills;
-    }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
-    }
+    public ProfileStatus getProfileStatus() { return profileStatus; }
+    public void setProfileStatus(ProfileStatus profileStatus) { this.profileStatus = profileStatus; }
 
-    public List<Notification> getNotifications() {
-        return notifications;
-    }
+    public LocalDateTime getLastLogin() { return lastLogin; }
+    public void setLastLogin(LocalDateTime lastLogin) { this.lastLogin = lastLogin; }
 
-    public void setNotifications(List<Notification> notifications) {
-        this.notifications = notifications;
-    }
+    public List<Application> getApplications() { return applications; }
+    public void setApplications(List<Application> applications) { this.applications = applications; }
+
+    public List<Job> getJobs() { return jobs; }
+    public void setJobs(List<Job> jobs) { this.jobs = jobs; }
+
+    public Set<Skill> getSkills() { return skills; }
+    public void setSkills(Set<Skill> skills) { this.skills = skills; }
+
+    public List<Notification> getNotifications() { return notifications; }
+    public void setNotifications(List<Notification> notifications) { this.notifications = notifications; }
 }

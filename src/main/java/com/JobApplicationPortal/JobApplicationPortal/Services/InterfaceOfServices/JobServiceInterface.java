@@ -20,4 +20,7 @@ public interface JobServiceInterface {
     Page<JobOutgoingDto> searchBy(String title, String location, int page, int size, String direction, String sortby);
 
     String updateJob(Long id, JobIncomingDto job);
+
+
+    JobOutgoingDto getJobById(Long jobId);
 }

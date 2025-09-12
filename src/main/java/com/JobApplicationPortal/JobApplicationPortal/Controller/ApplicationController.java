@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 public class ApplicationController {
 
 
@@ -21,24 +22,24 @@ public class ApplicationController {
     ApplicationServices applicationServices;
 
 
-    @PostMapping("/application/apply")
+    @PostMapping("/seeker/application/apply")
     public ResponseEntity<String> addJobApplication(@RequestBody IncomingApplicationDto input){
         return ResponseEntity.status(HttpStatus.CREATED).body(applicationServices.addApplication(input));
     }
 
-    @GetMapping("/application/client/{clientId}")
+    @GetMapping("/seeker/application/client/{clientId}")
     public ResponseEntity<List<OutgoingApplicationDto>> getApplicationByClientId(@PathVariable Long clientId){
         return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplicationById(clientId));
 
    }
 
-   @GetMapping("/application/job/{jobId}")
+   @GetMapping("/seeker/application/job/{jobId}")
    public ResponseEntity<List<OutgoingApplicationForRecruiter>> getApplicationByJobId(@PathVariable Long jobId){
        return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplicationByJobId(jobId));
 
    }
 
-   @GetMapping("/application/{aId}")
+   @GetMapping("/seeker/application/{aId}")
     public ResponseEntity<OutgoingApplication> getApplicationById(@PathVariable Long aId){
          return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplication(aId));
    }
