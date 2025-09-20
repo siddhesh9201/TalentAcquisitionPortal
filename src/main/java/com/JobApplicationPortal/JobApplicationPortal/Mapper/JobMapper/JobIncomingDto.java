@@ -23,7 +23,7 @@ public class JobIncomingDto {
     private String title;
 
 
-    @Pattern(regexp = "^[A-Za-z\\s]+$",message = "Optional")
+    @Pattern(regexp = "^[A-Za-z\\s]+$", message = "Optional")
     private String description;
 
     @NotNull

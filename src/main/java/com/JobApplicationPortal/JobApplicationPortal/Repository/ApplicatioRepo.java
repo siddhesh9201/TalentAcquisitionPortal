@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ApplicatioRepo extends JpaRepository<Application,Long>{
+public interface ApplicatioRepo extends JpaRepository<Application, Long> {
 
 
     List<Application> findByClient(Client client);

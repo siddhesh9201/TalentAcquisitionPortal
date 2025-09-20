@@ -1,5 +1,8 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Status;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,10 +31,12 @@ public class Application {
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Job job;
 
     @ManyToOne
     @JoinColumn(nullable = false)
+    @JsonIgnore
     private Client client;
 
     public Long getId() {

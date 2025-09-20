@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class CustomUserDetailsService implements UserDetailsService {
 
     private final ClientRepo clientRepo;
 
@@ -22,12 +22,11 @@ public class CustomUserDetailsService implements UserDetailsService{
     }
 
 
-        @Override
-        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-            return clientRepo.findByEmail(email)
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
-        }
-
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return clientRepo.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
+    }
 
 
 }

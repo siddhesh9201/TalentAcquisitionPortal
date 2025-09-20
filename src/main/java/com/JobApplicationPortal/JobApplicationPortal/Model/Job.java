@@ -44,10 +44,12 @@ public class Job {
 
     @ManyToOne
     @JoinColumn(name = "recruiter_id",nullable = false)
+    @JsonIgnore
     private Client recruiter;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "job",cascade = CascadeType.REMOVE,orphanRemoval = true)
+    @JsonIgnore
     private List<Application> applications;
 
     public Long getId() {

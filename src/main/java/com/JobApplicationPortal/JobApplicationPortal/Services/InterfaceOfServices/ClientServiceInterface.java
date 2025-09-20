@@ -15,7 +15,7 @@ public interface ClientServiceInterface {
 
     String deleteClient(Long id);
 
-    String updateClient(Long id,ClientIncomingDto incoming);
+    String updateClient(Long id, ClientIncomingDto incoming);
 
     Long getId(String email);
 }

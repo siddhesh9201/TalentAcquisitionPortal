@@ -3,6 +3,7 @@ package com.JobApplicationPortal.JobApplicationPortal.Model;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.ProfileStatus;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,15 +38,15 @@ public class Client implements UserDetails{
     @CreationTimestamp
     private LocalDateTime lastLogin;
 
-    @JsonIgnore
+
+  
     @OneToMany(mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Application> applications;
-
-    @JsonIgnore
+   @JsonIgnore
     @OneToMany(mappedBy = "recruiter", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Job> jobs;
 
-    @JsonManagedReference
+    @JsonIgnore
     @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
     private Set<Skill> skills = new HashSet<>();
 

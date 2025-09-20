@@ -28,6 +28,6 @@ public class AuthService {
         Client client = (Client) authentication.getPrincipal(); // works if Client implements UserDetails
         String token = authUtil.generateAccessToken(client);
 
-        return new LoginResponseDto(token, client.getId(),client.getName());
+        return new LoginResponseDto(token, client.getId(), client.getName());
     }
 }

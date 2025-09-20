@@ -18,8 +18,7 @@ import java.util.HashMap;
 public class AuthController {
 
 
-
-   private final AuthService authService;
+    private final AuthService authService;
     private final ClientServices services;
 
     public AuthController(AuthService authService, ClientServices services) {
@@ -29,12 +28,12 @@ public class AuthController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
+    public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(authService.login(loginRequestDto));
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<String> registerClient(@RequestBody @Valid ClientIncomingDto client){
+    public ResponseEntity<String> registerClient(@RequestBody @Valid ClientIncomingDto client) {
         services.addClient(client);
         return ResponseEntity.status(HttpStatus.CREATED).body("Registration Successfully!");
     }

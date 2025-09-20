@@ -19,64 +19,54 @@ import java.util.List;
 @CrossOrigin
 public class JobController {
 
-         @Autowired
-         JobServices jobServices;
+    @Autowired
+    JobServices jobServices;
 
-         @PostMapping("/recruiter/job/create")
-         public ResponseEntity<String> addJobByRecruiter(@Valid @RequestBody JobIncomingDto jobInput){
-             return ResponseEntity.status(HttpStatus.CREATED).body(jobServices.addNewJob(jobInput));
-         }
+    @PostMapping("/recruiter/job/create")
+    public ResponseEntity<String> addJobByRecruiter(@Valid @RequestBody JobIncomingDto jobInput) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobServices.addNewJob(jobInput));
+    }
 
 
-         @GetMapping("/job/getById/{jobId}")
-         public ResponseEntity<JobOutgoingDto> getjobById(@PathVariable Long jobId){
-             JobOutgoingDto job= jobServices.getJobById(jobId);
-             return ResponseEntity.status(HttpStatus.OK).body(job);
-         }
-         @GetMapping("/alljobs")
-         public ResponseEntity<Page<JobOutgoingDto>> getAllJobs(
-                 @RequestParam(defaultValue = "0") int page,
-                 @RequestParam(defaultValue="5") int size,
-                 @RequestParam(defaultValue = "asc")String direction,
-                 @RequestParam(defaultValue = "id") String sortby){
-             return ResponseEntity.status(HttpStatus.OK).body(jobServices.getAllJobs(page,size,direction,sortby));
-         }
+    @GetMapping("/job/getById/{jobId}")
+    public ResponseEntity<JobOutgoingDto> getjobById(@PathVariable Long jobId) {
+        JobOutgoingDto job = jobServices.getJobById(jobId);
+        return ResponseEntity.status(HttpStatus.OK).body(job);
+    }
 
-         @GetMapping("/recruiter/allrecruiter")
-         public ResponseEntity<Page<JobOutgoingForRecruiter>> getAllJobsForRecruiter(
-                 @RequestParam(defaultValue = "0") int page,
-                 @RequestParam(defaultValue="5") int size,
-                 @RequestParam(defaultValue = "asc")String direction,
-                 @RequestParam(defaultValue = "id") String sortby){
-             return ResponseEntity.status(HttpStatus.OK).body(jobServices.getAllJobsRecruiters(page,size,direction,sortby));
-         }
+    @GetMapping("/alljobs")
+    public ResponseEntity<List<JobOutgoingDto>> getAllJobs(
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobServices.getAllJobs());
+    }
 
-         @DeleteMapping("/recruiter/delete/{id}")
-         public ResponseEntity<String> deleteJobById(@PathVariable Long id){
-             return ResponseEntity.status(HttpStatus.OK).body(jobServices.deleteJobById(id));
-         }
 
-         @GetMapping("/search")
-       public ResponseEntity<Page<JobOutgoingDto>> searchBy(
-               @RequestParam(defaultValue = "")String title,
-               @RequestParam(defaultValue = "")String location,
-               @RequestParam(defaultValue = "0")int page,
-               @RequestParam(defaultValue = "5")int size,
-               @RequestParam(defaultValue = "asc")String direction,
-               @RequestParam(defaultValue = "companyName")String sortby){
-             title = title.trim();
-             location = location.trim();
-             if (title.isEmpty()) {
-                 throw new IllegalArgumentException("Title must not be empty");
-             }
+    @DeleteMapping("/recruiter/delete/{id}")
+    public ResponseEntity<String> deleteJobById(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobServices.deleteJobById(id));
+    }
 
-             return ResponseEntity.status(HttpStatus.OK).body(jobServices.searchBy(title,location,page,size,direction,sortby));
-         }
+    @GetMapping("/search")
+    public ResponseEntity<Page<JobOutgoingDto>> searchBy(
+            @RequestParam(defaultValue = "") String title,
+            @RequestParam(defaultValue = "") String location,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "asc") String direction,
+            @RequestParam(defaultValue = "companyName") String sortby) {
+        title = title.trim();
+        location = location.trim();
+        if (title.isEmpty()) {
+            throw new IllegalArgumentException("Title must not be empty");
+        }
 
-         @PutMapping("/recruiter/update/{id}")
-       public ResponseEntity<String> updateJob(@PathVariable Long id, @RequestBody JobIncomingDto job){
-             return ResponseEntity.ok(jobServices.updateJob(id,job));
-         }
+        return ResponseEntity.status(HttpStatus.OK).body(jobServices.searchBy(title, location, page, size, direction, sortby));
+    }
+
+    @PutMapping("/recruiter/update/{id}")
+    public ResponseEntity<String> updateJob(@PathVariable Long id, @RequestBody JobIncomingDto job) {
+        return ResponseEntity.ok(jobServices.updateJob(id, job));
+    }
 
 
 }

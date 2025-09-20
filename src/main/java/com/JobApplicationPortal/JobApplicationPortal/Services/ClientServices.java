@@ -57,7 +57,7 @@ public class ClientServices implements ClientServiceInterface {
         Client newClient = ClientMapper.toEntity(client);
         Boolean isIncomplete = client.getName() == null || client.getRole() == null;
         newClient.setProfileStatus(isIncomplete ? ProfileStatus.INCOMPLITE : ProfileStatus.COMPLETE);
-                 newClient.setPassword(passwordEncoder.encode(client.getPassword()));
+        newClient.setPassword(passwordEncoder.encode(client.getPassword()));
         clientRepo.save(newClient);
 
         Set<Skill> savedSkills = client.getSkills().stream().map(skillName -> {
@@ -77,11 +77,7 @@ public class ClientServices implements ClientServiceInterface {
 
     @Override
     public SeekerProfileOutgoingDto getSeeker(Long id) {
-        Client client = clientRepo.findById(id).orElseThrow(() -> new SeekerNotFoundException("Seeker not Found!"));
-        if (client.getRole() == Role.RECRUITER) {
-            throw new SeekerNotFoundException("Seeker Not Found!");
-        }
-
+        Client client = clientRepo.findById(id).orElseThrow(() -> new SeekerNotFoundException("User not Found!"));
         return ClientMapper.toDto(client);
 
     }
@@ -130,7 +126,9 @@ public class ClientServices implements ClientServiceInterface {
 
     @Override
     public Long getId(String email) {
-       Client c=  clientRepo.findByEmail(email).orElseThrow(()->{ throw new EmailNotFoundException("email not exist");});
+        Client c = clientRepo.findByEmail(email).orElseThrow(() -> {
+            throw new EmailNotFoundException("email not exist");
+        });
         return c.getId();
     }
 

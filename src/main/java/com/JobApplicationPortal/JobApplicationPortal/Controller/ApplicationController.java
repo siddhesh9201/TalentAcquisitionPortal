@@ -23,25 +23,25 @@ public class ApplicationController {
 
 
     @PostMapping("/seeker/application/apply")
-    public ResponseEntity<String> addJobApplication(@RequestBody IncomingApplicationDto input){
+    public ResponseEntity<String> addJobApplication(@RequestBody IncomingApplicationDto input) {
         return ResponseEntity.status(HttpStatus.CREATED).body(applicationServices.addApplication(input));
     }
 
     @GetMapping("/seeker/application/client/{clientId}")
-    public ResponseEntity<List<OutgoingApplicationDto>> getApplicationByClientId(@PathVariable Long clientId){
+    public ResponseEntity<List<OutgoingApplicationDto>> getApplicationByClientId(@PathVariable Long clientId) {
         return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplicationById(clientId));
 
-   }
+    }
 
-   @GetMapping("/seeker/application/job/{jobId}")
-   public ResponseEntity<List<OutgoingApplicationForRecruiter>> getApplicationByJobId(@PathVariable Long jobId){
-       return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplicationByJobId(jobId));
+    @GetMapping("/seeker/application/job/{jobId}")
+    public ResponseEntity<List<OutgoingApplicationForRecruiter>> getApplicationByJobId(@PathVariable Long jobId) {
+        return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplicationByJobId(jobId));
 
-   }
+    }
 
-   @GetMapping("/seeker/application/{aId}")
-    public ResponseEntity<OutgoingApplication> getApplicationById(@PathVariable Long aId){
-         return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplication(aId));
-   }
+    @GetMapping("/seeker/application/{aId}")
+    public ResponseEntity<OutgoingApplication> getApplicationById(@PathVariable Long aId) {
+        return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplication(aId));
+    }
 
 }

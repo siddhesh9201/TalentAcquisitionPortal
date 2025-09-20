@@ -1,8 +1,8 @@
 package com.JobApplicationPortal.JobApplicationPortal.Mapper.SkillMapper;
 
 public class SkillOutgoingDto {
-  private  String name;
-  private Long id;
+    private String name;
+    private Long id;
 
     public SkillOutgoingDto(String name, Long id) {
         this.name = name;

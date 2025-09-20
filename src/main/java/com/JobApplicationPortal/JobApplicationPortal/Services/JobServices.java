@@ -2,7 +2,6 @@ package com.JobApplicationPortal.JobApplicationPortal.Services;
 
 import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.JobAlreadyExistException;
-import com.JobApplicationPortal.JobApplicationPortal.Exception.JobsNotfoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.JobMapper.JobIncomingDto;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.JobMapper.JobMapper;
 import com.JobApplicationPortal.JobApplicationPortal.Mapper.JobMapper.JobOutgoingDto;
@@ -13,7 +12,6 @@ import com.JobApplicationPortal.JobApplicationPortal.Repository.ClientRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Repository.JobRepo;
 import com.JobApplicationPortal.JobApplicationPortal.Services.InterfaceOfServices.JobServiceInterface;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,8 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
-import static com.JobApplicationPortal.JobApplicationPortal.Mapper.JobMapper.JobMapper.toDto2;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -39,64 +36,65 @@ public class JobServices implements JobServiceInterface {
     @Transactional
     @Override
     public String addNewJob(JobIncomingDto jobInput) {
-        boolean exists = jobRepo.existsByTitleAndCompanyName(jobInput.getTitle(),jobInput.getCompanyName());
-        if(exists){
+        boolean exists = jobRepo.existsByTitleAndCompanyName(jobInput.getTitle(), jobInput.getCompanyName());
+        if (exists) {
             throw new JobAlreadyExistException("JOB Already Exist With Same Company");
         }
-     String email = jobInput.getRecruiterEmail().trim();
-      Client clientWithEmail=  clientRepo.findByEmail(email).orElseThrow(()-> new EmailNotFoundException("Recruiter with this email is not registered."));
+        String email = jobInput.getRecruiterEmail().trim();
+        Client clientWithEmail = clientRepo.findByEmail(email).orElseThrow(() -> new EmailNotFoundException("Recruiter with this email is not registered."));
 
-        Job newJob= JobMapper.toEntity(jobInput);
+        Job newJob = JobMapper.toEntity(jobInput);
         newJob.setRecruiter(clientWithEmail);
 
         jobRepo.save(newJob);
         return "JOB ADDED SUCCESSFULLY!";
     }
 
-    @Override
-    public Page<JobOutgoingDto> getAllJobs(int page, int size, String direction, String sortby) {
+    public List<JobOutgoingDto> getAllJobs() {
+        // Fetch all jobs from the repository
+        List<Job> jobs = jobRepo.findAll();
 
-      Sort sort = direction.equalsIgnoreCase("asc")? Sort.by(Sort.Direction.ASC,sortby): Sort.by(Sort.Direction.DESC);
-        Pageable pageable= PageRequest.of(page,size,sort);
-      Page<Job> jobs = jobRepo.findAll(pageable);
-
-      return jobs.map(JobMapper ::toDtoForSeeker);
+        // Map each Job entity to JobOutgoingDto for the seeker
+        // Using Java streams
+        return jobs.stream()
+                .map(JobMapper::toDtoForSeeker)
+                .collect(Collectors.toList());
     }
 
     @Transactional
     @Override
     public Page<JobOutgoingForRecruiter> getAllJobsRecruiters(int page, int size, String direction, String sortby) {
-        Sort sort = direction.equalsIgnoreCase("asc")? Sort.by(Sort.Direction.ASC,sortby): Sort.by(Sort.Direction.DESC);
-        Pageable pageable= PageRequest.of(page,size,sort);
+        Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(Sort.Direction.ASC, sortby) : Sort.by(Sort.Direction.DESC);
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Job> jobs = jobRepo.findAll(pageable);
 
-        return jobs.map(JobMapper ::toDto2);
+        return jobs.map(JobMapper::toDto2);
     }
 
     @Override
     public String deleteJobById(Long id) {
-        jobRepo.findById(id).orElseThrow(()-> new RuntimeException("Job Not exist of given" +id));
+        jobRepo.findById(id).orElseThrow(() -> new RuntimeException("Job Not exist of given" + id));
         jobRepo.deleteById(id);
         return "Job Deleted Successfully!";
     }
 
     @Override
     public Page<JobOutgoingDto> searchBy(String title, String location, int page, int size, String direction, String sortby) {
-        Sort sort = direction.equalsIgnoreCase("asc")? Sort.by(Sort.Direction.ASC,sortby): Sort.by(Sort.Direction.DESC);
-        Pageable pageable= PageRequest.of(page,size,sort);
+        Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(Sort.Direction.ASC, sortby) : Sort.by(Sort.Direction.DESC);
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Job> searchedJobs = jobRepo.searchJobs(title, location, pageable);
 
-        return searchedJobs.map(JobMapper ::toDtoForSeeker);
+        return searchedJobs.map(JobMapper::toDtoForSeeker);
     }
 
     @Transactional
     @Override
     public String updateJob(Long id, JobIncomingDto job) {
-       Job forupdate = jobRepo.findById(id).orElseThrow(()->new RuntimeException("Job Not Found For This "+ id));
+        Job forupdate = jobRepo.findById(id).orElseThrow(() -> new RuntimeException("Job Not Found For This " + id));
         String email = job.getRecruiterEmail().trim();
-        Client clientWithEmail=  clientRepo.findByEmail(email).orElseThrow(()-> new EmailNotFoundException("Recruiter with this email is not registered."));
+        Client clientWithEmail = clientRepo.findByEmail(email).orElseThrow(() -> new EmailNotFoundException("Recruiter with this email is not registered."));
 
-        if(job.getTitle()!= null) forupdate.setTitle(job.getTitle());
+        if (job.getTitle() != null) forupdate.setTitle(job.getTitle());
         if (job.getDescription() != null) forupdate.setDescription(job.getDescription());
         if (job.getLocation() != null) forupdate.setLocation(job.getLocation());
         if (job.getCompanyName() != null) forupdate.setCompanyName(job.getCompanyName());
@@ -104,15 +102,15 @@ public class JobServices implements JobServiceInterface {
         if (job.getType() != null) forupdate.setType(job.getType());
         if (job.getExpiryDate() != null) forupdate.setExpiryDate(job.getExpiryDate());
         forupdate.setRecruiter(clientWithEmail);
-       jobRepo.save(forupdate);
+        jobRepo.save(forupdate);
         return "Job Updated Successfully";
 
     }
 
     @Override
     public JobOutgoingDto getJobById(Long jobId) {
-        Job job= jobRepo.findById(jobId).orElseThrow(()-> new RuntimeException("Job Not Found"));
-             return JobMapper.toDtoForSeeker(job);
+        Job job = jobRepo.findById(jobId).orElseThrow(() -> new RuntimeException("Job Not Found"));
+        return JobMapper.toDtoForSeeker(job);
 
     }
 

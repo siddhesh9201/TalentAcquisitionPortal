@@ -12,7 +12,6 @@ import java.util.Set;
 public class ClientIncomingDto {
 
 
-
     private String name;
 
     @Email
@@ -35,7 +34,7 @@ public class ClientIncomingDto {
         this.skills = skills;
     }
 
-    public @Size(min=1 ,max = 50) @NotNull String getName() {
+    public @Size(min = 1, max = 50) @NotNull String getName() {
         return name;
     }
 

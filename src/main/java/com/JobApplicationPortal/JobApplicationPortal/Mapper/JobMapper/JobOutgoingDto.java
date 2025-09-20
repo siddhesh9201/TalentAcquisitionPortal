@@ -22,7 +22,7 @@ public class JobOutgoingDto {
     private LocalDateTime postedDate;
     private LocalDate expiryDate;
     private String recruiterName;
-    private String  recruiterEmail;
+    private String recruiterEmail;
 
     public String getRecruiterEmail() {
         return recruiterEmail;

@@ -10,12 +10,10 @@ import org.springframework.security.config.annotation.authentication.configurati
 public class Config {
 
 
-
     @Bean
-     public ModelMapper modelMapper(){
-         return new ModelMapper();
-     }
-
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 
 }

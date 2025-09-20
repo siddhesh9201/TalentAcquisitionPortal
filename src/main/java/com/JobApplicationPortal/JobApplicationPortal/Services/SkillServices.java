@@ -21,30 +21,28 @@ public class SkillServices {
     SkillRepo skillRepo;
 
 
-
     @Autowired
     ModelMapper modelMapper;
 
     public List<SkillOutgoingDto> getAllSkills() {
         List<Skill> skills = skillRepo.findAll();
-        return skills.stream().map((skill)->modelMapper.map(skill, SkillOutgoingDto.class)).toList();
+        return skills.stream().map((skill) -> modelMapper.map(skill, SkillOutgoingDto.class)).toList();
     }
 
     public String updateSkillById(Long skillId, SkillIncomingDto skillName) {
-        Skill skill= skillRepo.findById(skillId).orElseThrow(()-> new RuntimeException("Skill Not found"));
+        Skill skill = skillRepo.findById(skillId).orElseThrow(() -> new RuntimeException("Skill Not found"));
 
-          skill.setName(skillName.getName());
-          skillRepo.save(skill);
-          return "Skill Updated Successfully";
+        skill.setName(skillName.getName());
+        skillRepo.save(skill);
+        return "Skill Updated Successfully";
     }
 
 
     public String deleteSkillbyId(Long skillId) {
-        skillRepo.findById(skillId).orElseThrow(()->new RuntimeException("skill Not Found"));
+        skillRepo.findById(skillId).orElseThrow(() -> new RuntimeException("skill Not Found"));
         skillRepo.deleteById(skillId);
         return "Skill deleted SuccessFully!";
     }
-
 
 
 }

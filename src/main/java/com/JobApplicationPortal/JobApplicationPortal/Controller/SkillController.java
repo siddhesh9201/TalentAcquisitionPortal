@@ -17,22 +17,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/seeker")
 public class SkillController {
-       @Autowired
-       SkillServices skillServices;
+    @Autowired
+    SkillServices skillServices;
 
-       @GetMapping("/skill/getAll")
-      public ResponseEntity<List<SkillOutgoingDto>> getAllSkills(){
-          return ResponseEntity.status(HttpStatus.OK).body(skillServices.getAllSkills());
-      }
+    @GetMapping("/skill/getAll")
+    public ResponseEntity<List<SkillOutgoingDto>> getAllSkills() {
+        return ResponseEntity.status(HttpStatus.OK).body(skillServices.getAllSkills());
+    }
 
-      @PutMapping("/skill/update/{skillId}")
-      public ResponseEntity<String> updateSkillbyId(@PathVariable Long skillId, @RequestBody SkillIncomingDto skillName){
-            return  ResponseEntity.status(HttpStatus.OK).body(skillServices.updateSkillById(skillId,skillName));
-      }
+    @PutMapping("/skill/update/{skillId}")
+    public ResponseEntity<String> updateSkillbyId(@PathVariable Long skillId, @RequestBody SkillIncomingDto skillName) {
+        return ResponseEntity.status(HttpStatus.OK).body(skillServices.updateSkillById(skillId, skillName));
+    }
 
-      @DeleteMapping("/skill/delete/{skillId}")
-      public ResponseEntity<String> delteSkillById(@PathVariable Long skillId){
-          return ResponseEntity.status(HttpStatus.CREATED).body(skillServices.deleteSkillbyId(skillId));
-      }
+    @DeleteMapping("/skill/delete/{skillId}")
+    public ResponseEntity<String> delteSkillById(@PathVariable Long skillId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(skillServices.deleteSkillbyId(skillId));
+    }
 
 }

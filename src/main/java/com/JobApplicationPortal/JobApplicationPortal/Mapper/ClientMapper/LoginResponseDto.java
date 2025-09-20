@@ -11,7 +11,7 @@ public class LoginResponseDto {
     public LoginResponseDto(String jwt, Long clientId, String name) {
         this.jwt = jwt;
         this.clientId = clientId;
-        this.name =name;
+        this.name = name;
     }
 
     public String getName() {

@@ -1,5 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -15,7 +16,7 @@ public class Skill {
 
     private String name ;
 
-    @JsonManagedReference
+
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;

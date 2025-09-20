@@ -13,22 +13,20 @@ import java.util.List;
 
 public class JobMapper {
 
-    public static Job toEntity(JobIncomingDto input )
-    {
-            Job job = new Job();
-            job.setDescription(input.getDescription());
-            job.setExpiryDate(input.getExpiryDate());
-            job.setSalaryRange(input.getSalaryRange());
-            job.setLocation(input.getLocation());
-            job.setTitle(input.getTitle());
-            job.setType(input.getType());
-            job.setCompanyName(input.getCompanyName());
+    public static Job toEntity(JobIncomingDto input) {
+        Job job = new Job();
+        job.setDescription(input.getDescription());
+        job.setExpiryDate(input.getExpiryDate());
+        job.setSalaryRange(input.getSalaryRange());
+        job.setLocation(input.getLocation());
+        job.setTitle(input.getTitle());
+        job.setType(input.getType());
+        job.setCompanyName(input.getCompanyName());
 
-            return job;
+        return job;
     }
 
-    public static JobOutgoingDto toDtoForSeeker(Job job)
-    {
+    public static JobOutgoingDto toDtoForSeeker(Job job) {
         JobOutgoingDto output = new JobOutgoingDto();
         output.setId(job.getId());
         output.setCompanyName(job.getCompanyName());
@@ -45,8 +43,7 @@ public class JobMapper {
     }
 
 
-
-    public static JobOutgoingForRecruiter toDto2(Job job){
+    public static JobOutgoingForRecruiter toDto2(Job job) {
         JobOutgoingForRecruiter output = new JobOutgoingForRecruiter();
         output.setId(job.getId());
         output.setCompanyName(job.getCompanyName());

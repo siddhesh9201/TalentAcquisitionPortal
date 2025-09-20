@@ -1,6 +1,7 @@
 package com.JobApplicationPortal.JobApplicationPortal.Model;
 
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.MessageType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -20,6 +21,7 @@ public class Notification {
     private LocalDateTime createdAt;
     @ManyToOne
     @JoinColumn(name = "client_id",nullable = false )
+    @JsonIgnore
     private Client client;
 
     public Long getId() {

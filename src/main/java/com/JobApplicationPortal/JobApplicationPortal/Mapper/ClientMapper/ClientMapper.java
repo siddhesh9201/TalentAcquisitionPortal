@@ -12,13 +12,12 @@ import java.util.stream.Collectors;
 public class ClientMapper {
 
 
-
-
-    public static Client toEntity(ClientIncomingDto input ){
+    public static Client toEntity(ClientIncomingDto input) {
 
         Client client = new Client();
         client.setName(input.getName());
-        client.setEmail(input.getEmail());;
+        client.setEmail(input.getEmail());
+        ;
 
         client.setRole(input.getRole());
 
@@ -27,7 +26,7 @@ public class ClientMapper {
 
 
     //Jobseeker  mapping entity to outDto
-    public static SeekerProfileOutgoingDto toDto(Client client){
+    public static SeekerProfileOutgoingDto toDto(Client client) {
 
         SeekerProfileOutgoingDto output = new SeekerProfileOutgoingDto();
         output.setId(client.getId());
@@ -47,7 +46,7 @@ public class ClientMapper {
     }
 
     //recruiter mapping entity to dto
-    public static RecruiterOutgoingDto toDtoForRecruiter(Client client){
+    public static RecruiterOutgoingDto toDtoForRecruiter(Client client) {
 
         RecruiterOutgoingDto output = new RecruiterOutgoingDto();
         output.setId(client.getId());
@@ -59,7 +58,6 @@ public class ClientMapper {
         output.setProfileStatus(client.getProfileStatus());
         return output;
     }
-
 
 
 }

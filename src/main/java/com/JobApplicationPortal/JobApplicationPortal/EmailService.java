@@ -11,7 +11,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    public void sendRegistrationEmail(String toEmail){
+    public void sendRegistrationEmail(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Welcome to Our Platform!");
@@ -20,7 +20,7 @@ public class EmailService {
         mailSender.send(message);
     }
 
-    public void sendSelection(String toEmail){
+    public void sendSelection(String toEmail) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setSubject("Congratulations!");

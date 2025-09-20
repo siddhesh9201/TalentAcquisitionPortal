@@ -27,51 +27,49 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class NotificationServices implements NotificationServiceInterface{
+public class NotificationServices implements NotificationServiceInterface {
 
 
-        @Autowired
-        NotificationRepo notifyRepo;
-        @Autowired
-        ModelMapper modelMapper;
-        @Autowired
-        ApplicatioRepo applicatioRepo;
-        @Autowired
-        ClientRepo clientRepo;
-        @Autowired
-        EmailService emailService;
+    @Autowired
+    NotificationRepo notifyRepo;
+    @Autowired
+    ModelMapper modelMapper;
+    @Autowired
+    ApplicatioRepo applicatioRepo;
+    @Autowired
+    ClientRepo clientRepo;
+    @Autowired
+    EmailService emailService;
 
-        @Override
-        public String sendNotificationRejection(NotificationIncomingDto notify) {
-            Application application = applicatioRepo.findById(notify.getApplication_id()).orElseThrow(()-> new RuntimeException("Application Not Found"));
-            Client reciever= application.getClient();
-            Notification notification = new  Notification();
-            notification.setClient(reciever);
-            notification.setMessage(notify.getMessage());
-            notification.setType(MessageType.INFO);
-            notification.setIsread(false);
-            application.setStatus(Status.REJECTED);
-            applicatioRepo.save(application);
-            notifyRepo.save(notification);
+    @Override
+    public String sendNotificationRejection(NotificationIncomingDto notify) {
+        Application application = applicatioRepo.findById(notify.getApplication_id()).orElseThrow(() -> new RuntimeException("Application Not Found"));
+        Client reciever = application.getClient();
+        Notification notification = new Notification();
+        notification.setClient(reciever);
+        notification.setMessage(notify.getMessage());
+        notification.setType(MessageType.INFO);
+        notification.setIsread(false);
+        application.setStatus(Status.REJECTED);
+        applicatioRepo.save(application);
+        notifyRepo.save(notification);
 
-            return "Notification Added!";
-        }
+        return "Notification Added!";
+    }
 
-        @Override
-        public String removeNotification(Long id) {
-            notifyRepo.findById(id).orElseThrow(()-> new NotificationNotFoundException("NOTIFICATION NOT FOUND"));
-            notifyRepo.deleteById(id);
-            return "Notification Deleted Successfully";
-        }
-
-
+    @Override
+    public String removeNotification(Long id) {
+        notifyRepo.findById(id).orElseThrow(() -> new NotificationNotFoundException("NOTIFICATION NOT FOUND"));
+        notifyRepo.deleteById(id);
+        return "Notification Deleted Successfully";
+    }
 
 
     @Transactional
-    public String sendNotification(NotificationIncomingDto incomingDto){
-        Application application = applicatioRepo.findById(incomingDto.getApplication_id()).orElseThrow(()-> new RuntimeException("Application Not Found"));
-        Client reciever= application.getClient();
-        Notification notification = new  Notification();
+    public String sendNotification(NotificationIncomingDto incomingDto) {
+        Application application = applicatioRepo.findById(incomingDto.getApplication_id()).orElseThrow(() -> new RuntimeException("Application Not Found"));
+        Client reciever = application.getClient();
+        Notification notification = new Notification();
         notification.setClient(reciever);
         notification.setMessage(incomingDto.getMessage());
         notification.setType(MessageType.INFO);
@@ -80,19 +78,19 @@ public class NotificationServices implements NotificationServiceInterface{
         applicatioRepo.save(application);
         notifyRepo.save(notification);
         System.out.println(reciever.getEmail());
-      // emailService.sendSelection(reciever.getEmail());
+        // emailService.sendSelection(reciever.getEmail());
         return "Notification Added!";
 
     }
 
     public Page<NotficationOutgoingDto> getAllNotifications(int page, int size, String direction, String sortby) {
-        Sort sort = direction.equalsIgnoreCase("asc")? Sort.by(Sort.Direction.ASC,sortby) :Sort.by(Sort.Direction.DESC,sortby);
-        Pageable pageable = PageRequest.of(page,size,sort);
+        Sort sort = direction.equalsIgnoreCase("asc") ? Sort.by(Sort.Direction.ASC, sortby) : Sort.by(Sort.Direction.DESC, sortby);
+        Pageable pageable = PageRequest.of(page, size, sort);
         Page<Notification> notifications = notifyRepo.findAll(pageable);
-        if (notifications.isEmpty()){
+        if (notifications.isEmpty()) {
             throw new NoAnyNotificationFoundException("Not Any Notification Are Found");
         }
-        return notifications.map(x->modelMapper.map(x,NotficationOutgoingDto.class));
+        return notifications.map(x -> modelMapper.map(x, NotficationOutgoingDto.class));
 
     }
 

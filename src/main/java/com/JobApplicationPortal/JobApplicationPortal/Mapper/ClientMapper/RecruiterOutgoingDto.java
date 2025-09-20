@@ -66,9 +66,6 @@ public class RecruiterOutgoingDto {
     }
 
 
-
-
-
     public List<Job> getPostedJobs() {
         return postedJobs;
     }

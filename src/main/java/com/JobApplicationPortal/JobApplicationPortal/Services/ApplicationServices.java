@@ -63,7 +63,6 @@ public class ApplicationServices implements ApplicationServiceInterface {
 //        application.setExpectedSalary(input.getExpectedSalary());
 
 
-
         Application application = modelMapper.map(input, Application.class);
         application.setId(null); // <-- Important: prevent accidental merge due to ID
 
@@ -79,27 +78,27 @@ public class ApplicationServices implements ApplicationServiceInterface {
 
     @Override
     public List<OutgoingApplicationDto> getApplicationById(Long clientId) {
-        Client client= clientRepo.findById(clientId).orElseThrow(()->new RuntimeException("Client not found"));
+        Client client = clientRepo.findById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
         List<Application> applications = applicatioRepo.findByClient(client);
 
-       return applications.stream()
+        return applications.stream()
                 .map(app -> modelMapper.map(app, OutgoingApplicationDto.class))
                 .toList();
     }
 
     @Override
     public List<OutgoingApplicationForRecruiter> getApplicationByJobId(Long jobId) {
-               Job job = jobRepo.findById(jobId).orElseThrow(()->new RuntimeException("Job Not Found"));
-             List<Application> applications =  applicatioRepo.findByJob(job);
-             return applications.stream().map((app)->modelMapper.map(app, OutgoingApplicationForRecruiter.class)).toList();
+        Job job = jobRepo.findById(jobId).orElseThrow(() -> new RuntimeException("Job Not Found"));
+        List<Application> applications = applicatioRepo.findByJob(job);
+        return applications.stream().map((app) -> modelMapper.map(app, OutgoingApplicationForRecruiter.class)).toList();
 
 
     }
 
     @Override
     public OutgoingApplication getApplication(Long aId) {
-        Application application= applicatioRepo.findById(aId).orElseThrow(()->new RuntimeException("Application Not Found"));
-        return modelMapper.map(application,OutgoingApplication.class);
+        Application application = applicatioRepo.findById(aId).orElseThrow(() -> new RuntimeException("Application Not Found"));
+        return modelMapper.map(application, OutgoingApplication.class);
     }
 
 }
