@@ -1,9 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Services.InterfaceOfServices;
 
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.IncomingApplicationDto;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplication;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplicationDto;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplicationForRecruiter;
+import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.*;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Application;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Client;
 
@@ -18,4 +15,7 @@ public interface ApplicationServiceInterface {
     List<OutgoingApplicationForRecruiter> getApplicationByJobId(Long jobId);
 
     OutgoingApplication getApplication(Long aId);
+
+
+    String changeStatus(Long aId, StatusIncomingDto statusIncomingDto);
 }
