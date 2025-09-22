@@ -25,7 +25,7 @@ public class AuthUtil {
         this.secretKey = Keys.hmacShaKeyFor(jwtSecretKey.getBytes());
     }
 
-    // ✅ Generate token
+
     public String generateAccessToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
         claims.put("role", userDetails.getAuthorities());

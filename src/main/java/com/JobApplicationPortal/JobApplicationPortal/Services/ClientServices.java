@@ -1,6 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Services;
 
-import com.JobApplicationPortal.JobApplicationPortal.EmailService;
+import com.JobApplicationPortal.JobApplicationPortal.EmailService.EmailService;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.ClientNotFoundException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailAlreadyExistException;
 import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailNotFoundException;

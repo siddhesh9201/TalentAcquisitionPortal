@@ -1,13 +1,7 @@
 package com.JobApplicationPortal.JobApplicationPortal.Services;
 
-import com.JobApplicationPortal.JobApplicationPortal.Exception.ApplicationAlreadyExistException;
-import com.JobApplicationPortal.JobApplicationPortal.Exception.EmailNotFoundException;
-import com.JobApplicationPortal.JobApplicationPortal.Exception.JobAlreadyExistException;
-import com.JobApplicationPortal.JobApplicationPortal.Exception.JobsNotfoundException;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.IncomingApplicationDto;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplication;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplicationDto;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplicationForRecruiter;
+import com.JobApplicationPortal.JobApplicationPortal.Exception.*;
+import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.*;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Application;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Client;
 import com.JobApplicationPortal.JobApplicationPortal.Model.Enums.Status;
@@ -99,6 +93,14 @@ public class ApplicationServices implements ApplicationServiceInterface {
     public OutgoingApplication getApplication(Long aId) {
         Application application = applicatioRepo.findById(aId).orElseThrow(() -> new RuntimeException("Application Not Found"));
         return modelMapper.map(application, OutgoingApplication.class);
+    }
+
+    @Override
+    public String changeStatus(Long aId, StatusIncomingDto statusIncomingDto) {
+      Application application =  applicatioRepo.findById(aId).orElseThrow(()-> new ApplicationNotFoundException("Application Not Found For this :"+ aId));
+      application.setStatus(statusIncomingDto.getStatus());
+      applicatioRepo.save(application);
+        return "Application Status Changed Successfully!";
     }
 
 }

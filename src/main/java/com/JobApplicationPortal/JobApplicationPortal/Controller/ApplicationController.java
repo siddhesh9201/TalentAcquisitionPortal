@@ -1,9 +1,6 @@
 package com.JobApplicationPortal.JobApplicationPortal.Controller;
 
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.IncomingApplicationDto;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplication;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplicationDto;
-import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.OutgoingApplicationForRecruiter;
+import com.JobApplicationPortal.JobApplicationPortal.Mapper.ApplicationMapper.*;
 import com.JobApplicationPortal.JobApplicationPortal.Services.ApplicationServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,7 +30,7 @@ public class ApplicationController {
 
     }
 
-    @GetMapping("/seeker/application/job/{jobId}")
+    @GetMapping("/recruiter/application/job/{jobId}")
     public ResponseEntity<List<OutgoingApplicationForRecruiter>> getApplicationByJobId(@PathVariable Long jobId) {
         return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplicationByJobId(jobId));
 
@@ -42,6 +39,13 @@ public class ApplicationController {
     @GetMapping("/seeker/application/{aId}")
     public ResponseEntity<OutgoingApplication> getApplicationById(@PathVariable Long aId) {
         return ResponseEntity.status(HttpStatus.OK).body(applicationServices.getApplication(aId));
+    }
+
+    @PutMapping("/recruiter/appliation/{aId}")
+    public ResponseEntity<String> updateStatus(@PathVariable Long aId , @RequestBody StatusIncomingDto statusIncomingDto){
+           String s =applicationServices.changeStatus(aId,statusIncomingDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(s);
+
     }
 
 }
