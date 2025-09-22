@@ -1,4 +1,4 @@
-package com.JobApplicationPortal.JobApplicationPortal;
+package com.JobApplicationPortal.JobApplicationPortal.EmailService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
