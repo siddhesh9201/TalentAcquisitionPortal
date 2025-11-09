@@ -55,7 +55,7 @@ function JobFormUI() {
         return;
       }
 
-      // Clear form fields after successful submission
+     
       jTitle.current.value = "";
       jDescription.current.value = "";
       jType.current.value = "";
@@ -63,8 +63,8 @@ function JobFormUI() {
       jCompanyName.current.value = "";
       jSalaryRange.current.value = "";
       jExpiryDate.current.value = "";
-      jEmail.current.value = email; // Reset to default
-      jName.current.value = name;   // Reset to default
+      jEmail.current.value = email; 
+      jName.current.value = name;  
 
       alert("Job added successfully!");
       navigate("/");

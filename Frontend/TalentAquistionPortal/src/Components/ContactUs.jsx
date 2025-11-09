@@ -9,7 +9,7 @@ export default function ContactUs() {
       <section style={{ minHeight: "80vh", display: "flex", alignItems: "center" }}>
         <div style={{ display: "flex", flexWrap: "wrap", width: "100%", maxWidth: "1200px", margin: "0 auto", gap: "20px" }}>
 
-          {/* Image Section */}
+          
           <div style={{ flex: "1 1 300px", textAlign: "center" }}>
             <img
               src={contact}
@@ -18,14 +18,14 @@ export default function ContactUs() {
             />
           </div>
 
-          {/* Contact Info Section */}
+         
           <div style={{ flex: "1 1 300px", padding: "20px" }}>
             <h2 style={{ marginBottom: "20px", fontSize: "2rem", color: "#333" }}>Get in touch</h2>
             <p style={{ color: "#555", marginBottom: "30px", lineHeight: "1.6" }}>
               We're always on the lookout to work with new clients. If you're interested in working with us, please get in touch in one of the following ways.
             </p>
 
-            {/* Address */}
+            
             <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "25px" }}>
               <img src={addressIcon} alt="Address" style={{ width: "28px", marginRight: "15px" }} />
               <div>
@@ -36,7 +36,7 @@ export default function ContactUs() {
               </div>
             </div>
 
-            {/* Phone */}
+            
             <div style={{ display: "flex", alignItems: "flex-start", marginBottom: "25px" }}>
               <img src={phone} alt="Phone" style={{ width: "28px", marginRight: "15px" }} />
               <div>
@@ -49,7 +49,7 @@ export default function ContactUs() {
               </div>
             </div>
 
-            {/* Email */}
+            
             <div style={{ display: "flex", alignItems: "flex-start" }}>
               <img src={emailIcon} alt="Email" style={{ width: "28px", marginRight: "15px" }} />
               <div>

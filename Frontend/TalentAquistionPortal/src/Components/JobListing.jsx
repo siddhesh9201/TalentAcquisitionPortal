@@ -12,9 +12,9 @@ function JobListing() {
   const role = localStorage.getItem("role");
   const token = localStorage.getItem("token");
 
-  const location = useLocation(); // to detect navigation changes
+  const location = useLocation(); 
 
-  // Fetch all jobs
+ 
   const getAllJobs = async () => {
     setLoading(true);
     try {

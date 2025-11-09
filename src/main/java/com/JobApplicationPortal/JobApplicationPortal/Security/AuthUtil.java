@@ -38,16 +38,16 @@ public class AuthUtil {
                 .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
-                .signWith(secretKey, SignatureAlgorithm.HS256) // ✅ fixed
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // ✅ Extract username
+
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
-    // ✅ Extract expiration
+
     public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
